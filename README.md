@@ -8,7 +8,7 @@ This is what's up to do
     - [ ] shutdown button
   - [ ] Handle shutdown
   - [ ] graphics
-    - [ ] update imaged
+    - [ ] update images
     - [ ] fix image size / make resizable
     - [ ] consider new objects
 
