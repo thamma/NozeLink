@@ -3,7 +3,9 @@
 ##TODO
 This is what's up to do 
 - [ ] Gui stuff
-  - [ ] 
+  - [ ] Server Wizard
+    - [ ] live log
+    - [ ] shutdown button
   - [ ] Handle sever shutdown/kill
   - [ ] Handle client shutdown/kill
 
