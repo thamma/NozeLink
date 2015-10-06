@@ -42,59 +42,12 @@ public class NozeModelTest {
 		EntityPlayer entity = new EntityPlayer(0);
 		model.setEntityAt(coord, entity);
 		model.movePlayer(0, 0);
+		model.movePlayer(0, 3);
+		model.movePlayer(0, 1);
 		Coordinate newCoord = new Coordinate(1, 0);
 		System.out.println(model.getAt(newCoord));
 		assertTrue("Player not found at expected location after two moves",
 				model.getAt(newCoord).getEntity() instanceof EntityPlayer);
-	}
-
-	@Test
-	public void serverTest() throws IOException, InterruptedException {
-		new Thread(() -> {
-			try {
-				Server server = new Server(80, 1) {
-
-					@Override
-					public ServerClientInputHandler getServerClientInputHandler() {
-						return new ServerClientInputHandler() {
-
-							@Override
-							public void handle(Server server, String s, ServerConnection serverconnection) {
-								System.out.println("input: " + s);
-
-							}
-
-						};
-					}
-
-					@Override
-					public ServerInputHandler getServerInputHandler() {
-						// TODO Auto-generated method stub
-						return null;
-					}
-				};
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}).start();
-
-		System.out.println("HI");
-		Client client = new Client("localhost", 80) {
-
-			@Override
-			public ClientInputHandler getClientInputHandler() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public ClientServerInputHandler getClientServerInputHandler() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-		client.pushMessage("hi");
 	}
 
 }

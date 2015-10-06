@@ -28,8 +28,14 @@ public class Coordinate {
 	}
 
 	public void assertPositive() {
-		this.x = Math.floorMod(x, NozeModel.WIDTH);
-		this.y = Math.floorMod(y, NozeModel.HEIGHT);
+		if (x < 0)
+			x += NozeModel.WIDTH;
+		if (x >= NozeModel.WIDTH)
+			x -= NozeModel.WIDTH;
+		if (y < 0)
+			y += NozeModel.HEIGHT;
+		if (y >= NozeModel.HEIGHT)
+			y -= NozeModel.HEIGHT;
 	}
 
 	@Override

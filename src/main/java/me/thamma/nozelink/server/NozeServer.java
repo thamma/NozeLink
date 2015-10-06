@@ -9,6 +9,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import me.thamma.nozelink.client.commands.MoveCommand;
+import me.thamma.nozelink.model.Coordinate;
 import me.thamma.nozelink.model.NozeModel;
 import me.thamma.nozelink.model.entity.EntityPlayer;
 import me.thamma.nozelink.server.event.Event;
@@ -47,16 +48,19 @@ public class NozeServer extends Server {
 	public ServerNewConnectionHandler getServerNewConnectionHandler() {
 		return new ServerNewConnectionHandler() {
 			@Override
-			public void handle(Server server, ServerConnection connection) throws IOException {
+			public void handle(Server server, ServerConnection connection) {
 				NozeServer nozeserver = (NozeServer) server;
 				// should already be set
-				System.out.println("client " + connection.getId() + " connected");
 				if (model == null)
 					nozeserver.model = new NozeModel();
-				nozeserver.model.setEntityAt(nozeserver.model.randomFreeCoordinate(),
-						new EntityPlayer(connection.getId()));
-				nozeserver.sendEvent(new UpdateModelEvent(nozeserver.model));
-				connection.message("hi server");
+				Coordinate coord = nozeserver.model.randomFreeCoordinate();
+				nozeserver.model.setEntityAt(coord, new EntityPlayer(connection.getId()));
+				try {
+					connection.message(new UpdateModelEvent(nozeserver.model).toJSON().toJSONString());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		};
 	}
@@ -67,7 +71,6 @@ public class NozeServer extends Server {
 
 			@Override
 			public void handle(Server server, String input) {
-				System.out.println("handle runs");
 			}
 
 		};
@@ -87,11 +90,9 @@ public class NozeServer extends Server {
 
 					switch ((String) object.get("type")) {
 					case "MoveCommand":
-						System.out.println("is move command");
 						MoveCommand m = new MoveCommand(new BigDecimal((long) object.get("playerId")).intValue(),
 								new BigDecimal((long) object.get("direction")).intValue());
-						System.out.println("called");
-						if (m.validate(nozeserver, model)) {
+						if (m.validate(model)) {
 							m.execute(nozeserver, model);
 						}
 						break;

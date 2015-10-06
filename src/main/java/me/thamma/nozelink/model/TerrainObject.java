@@ -3,6 +3,7 @@ package me.thamma.nozelink.model;
 import javafx.scene.layout.Pane;
 import me.thamma.nozelink.gui.client.game.tiles.Grass;
 import me.thamma.nozelink.gui.client.game.tiles.Rock;
+import me.thamma.nozelink.gui.client.game.tiles.Water;
 import me.thamma.nozelink.gui.client.game.tiles.Woods;
 
 public enum TerrainObject {
@@ -26,7 +27,7 @@ public enum TerrainObject {
 		case ROCK:
 			return new Rock();
 		case WATER:
-			return new Rock();
+			return new Water();
 		default:
 			return new Grass();
 		}

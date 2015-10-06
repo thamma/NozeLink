@@ -29,10 +29,6 @@ public class NozeGui extends Application {
 		if (args.length == 0) {
 			launch();
 		} else {
-			// System.out.println("Launching server");
-			// Scanner sc = new Scanner(System.in);
-			// System.out.println("Please enter your preffed port");
-			// int port = sc.nextInt();
 			new NozeServer(80, 1);
 		}
 	}

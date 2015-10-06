@@ -3,7 +3,10 @@ package me.thamma.nozelink.client.commands;
 import org.json.simple.JSONObject;
 
 import me.thamma.nozelink.client.Command;
+import me.thamma.nozelink.model.Coordinate;
 import me.thamma.nozelink.model.NozeModel;
+import me.thamma.nozelink.model.OccupyType;
+import me.thamma.nozelink.model.entity.EntityPlayer;
 import me.thamma.nozelink.server.NozeServer;
 import me.thamma.nozelink.server.event.UpdateModelEvent;
 
@@ -34,14 +37,25 @@ public class MoveCommand extends Command {
 
 	@Override
 	public void execute(NozeServer server, NozeModel model) {
-		System.out.println("movePlayer called: " + playerId + " dir: " + direction);
-		model.movePlayer(this.direction, this.playerId);
+		model.movePlayer(this.playerId, this.direction);
 		server.sendEvent(new UpdateModelEvent(model));
 	}
 
 	@Override
-	public boolean validate(NozeServer server, NozeModel model) {
-		return true;
+	public boolean validate(NozeModel model) {
+		Coordinate from = null;
+		outermost: for (int i = 0; i < model.getGrid().length; i++)
+			for (int j = 0; j < model.getGrid()[i].length; j++)
+				if (model.getGrid()[i][j].getEntity() instanceof EntityPlayer)
+					if (((EntityPlayer) model.getGrid()[i][j].getEntity()).getId() == this.playerId) {
+						from = new Coordinate(i, j);
+						break outermost;
+					}
+		from.moveById(this.direction);
+		if (model.getAt(from).getTerrain().getOccupaion().equals(OccupyType.FREE)) {
+			return !(model.getAt(from).getEntity() instanceof EntityPlayer);
+		}
+		return false;
 	}
 
 }

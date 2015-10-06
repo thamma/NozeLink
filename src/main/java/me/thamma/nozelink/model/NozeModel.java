@@ -15,8 +15,8 @@ public class NozeModel extends JSONable {
 	private NozeTile[][] grid;
 	int seed;
 
-	public static final int WIDTH = 16;
-	public static final int HEIGHT = 16;
+	public static final int WIDTH = 24;
+	public static final int HEIGHT = 24;
 
 	public NozeModel(int seed) {
 		this.seed = seed;
@@ -31,7 +31,7 @@ public class NozeModel extends JSONable {
 		return this.grid;
 	}
 
-	public void movePlayer(int direction, int id) {
+	public void movePlayer(int id, int direction) {
 		Coordinate from = null;
 		outermost: for (int i = 0; i < this.grid.length; i++)
 			for (int j = 0; j < this.grid[i].length; j++)
@@ -41,16 +41,13 @@ public class NozeModel extends JSONable {
 						break outermost;
 					}
 		if (from == null) {
-			System.out.println("No player found to perform move: id == " + id);
 			return;
 		}
 		EntityPlayer player = (EntityPlayer) this.getAt(from).getEntity();
 		Coordinate to = new Coordinate(from.x, from.y);
-		to.moveById(id);
+		to.moveById(direction);
 		this.setEntityAt(to, player);
 		this.setEntityAt(from, new EntityNone());
-		System.out.println("from: " + from);
-		System.out.println("to: " + to);
 	}
 
 	public NozeModel(String json) throws ParseException {

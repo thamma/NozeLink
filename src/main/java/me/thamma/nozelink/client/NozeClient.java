@@ -16,15 +16,15 @@ import me.thamma.serverutils.ClientServerInputHandler;
 public class NozeClient extends Client {
 
 	private NozeGui main;
-	
+
 	public NozeClient(NozeGui gui, String ip, int port) throws UnknownHostException, IOException {
 		super(ip, port);
 		this.main = gui;
 	}
 
 	public void sendCommand(Command command) {
-		System.out.println("sent command");
-		this.pushMessage(command.toJSON().toJSONString());
+		if (command.validate(main.model))
+			this.pushMessage(command.toJSON().toJSONString());
 	}
 
 	@Override
@@ -51,7 +51,6 @@ public class NozeClient extends Client {
 						JSONObject object = (JSONObject) o;
 
 						if (((String) object.get("type")).equals("UpdateModelEvent")) {
-							System.out.println("Should update model");
 							main.model = new NozeModel(input);
 							main.clientView.redraw();
 						}

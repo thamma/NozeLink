@@ -10,20 +10,16 @@ public class NozeGuiListener {
 		int id = nozeClient.client.getId();
 		switch (event.getCode()) {
 		case UP:
-//			nozeClient.client.sendCommand(new MoveCommand(id, 0));
-			nozeClient.model.movePlayer(nozeClient.client.getId(), 0);
+			nozeClient.client.sendCommand(new MoveCommand(id, 0));
 			break;
 		case RIGHT:
-//			nozeClient.client.sendCommand(new MoveCommand(id, 1));
-			nozeClient.model.movePlayer(nozeClient.client.getId(), 1);
+			nozeClient.client.sendCommand(new MoveCommand(id, 1));
 			break;
 		case DOWN:
-//			nozeClient.client.sendCommand(new MoveCommand(id, 2));
-			nozeClient.model.movePlayer(nozeClient.client.getId(), 3);
+			nozeClient.client.sendCommand(new MoveCommand(id, 2));
 			break;
 		case LEFT:
-//			nozeClient.client.sendCommand(new MoveCommand(id, 3));
-			nozeClient.model.movePlayer(nozeClient.client.getId(), 4);
+			nozeClient.client.sendCommand(new MoveCommand(id, 3));
 			break;
 		default:
 			break;

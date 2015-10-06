@@ -10,5 +10,5 @@ public abstract class Command extends JSONable {
 
 	public abstract void execute(NozeServer server, NozeModel model);
 
-	public abstract boolean validate(NozeServer server, NozeModel model);
+	public abstract boolean validate(NozeModel model);
 }
