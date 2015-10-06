@@ -47,14 +47,16 @@ public class NozeServer extends Server {
 	public ServerNewConnectionHandler getServerNewConnectionHandler() {
 		return new ServerNewConnectionHandler() {
 			@Override
-			public void handle(Server server, ServerConnection connection) {
+			public void handle(Server server, ServerConnection connection) throws IOException {
 				NozeServer nozeserver = (NozeServer) server;
 				// should already be set
-				 if (model == null)
-				 nozeserver.model = new NozeModel();
+				System.out.println("client " + connection.getId() + " connected");
+				if (model == null)
+					nozeserver.model = new NozeModel();
 				nozeserver.model.setEntityAt(nozeserver.model.randomFreeCoordinate(),
 						new EntityPlayer(connection.getId()));
 				nozeserver.sendEvent(new UpdateModelEvent(nozeserver.model));
+				connection.message("hi server");
 			}
 		};
 	}
@@ -65,6 +67,7 @@ public class NozeServer extends Server {
 
 			@Override
 			public void handle(Server server, String input) {
+				System.out.println("handle runs");
 			}
 
 		};
@@ -81,12 +84,13 @@ public class NozeServer extends Server {
 				try {
 					Object o = parser.parse(input);
 					JSONObject object = (JSONObject) o;
-					System.out.println("." + object.toJSONString());
 
 					switch ((String) object.get("type")) {
 					case "MoveCommand":
+						System.out.println("is move command");
 						MoveCommand m = new MoveCommand(new BigDecimal((long) object.get("playerId")).intValue(),
 								new BigDecimal((long) object.get("direction")).intValue());
+						System.out.println("called");
 						if (m.validate(nozeserver, model)) {
 							m.execute(nozeserver, model);
 						}

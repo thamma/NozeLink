@@ -125,19 +125,11 @@ public class ServerLoginPane extends GridPane {
 	private void connect(int port, int count) {
 		if (main.server == null) {
 			try {
-				Thread thread = new Thread(() -> {
-					try {
-						main.server = new NozeServer(port, count);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				});
-				thread.start();
 				Platform.runLater(() -> {
 					connect.setDisable(true);
 					connect.setText("Launched");
 				});
+				main.server = new NozeServer(port, count);
 			} catch (Exception e) {
 				connect.setText("Error launching");
 				portField.setDisable(false);

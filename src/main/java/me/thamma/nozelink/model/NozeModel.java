@@ -46,16 +46,18 @@ public class NozeModel extends JSONable {
 		}
 		EntityPlayer player = (EntityPlayer) this.getAt(from).getEntity();
 		Coordinate to = new Coordinate(from.x, from.y);
-		this.setEntityAt(to, player);
 		to.moveById(id);
+		this.setEntityAt(to, player);
 		this.setEntityAt(from, new EntityNone());
-
+		System.out.println("from: " + from);
+		System.out.println("to: " + to);
 	}
 
 	public NozeModel(String json) throws ParseException {
 		JSONParser parser = new JSONParser();
 		Object o = parser.parse(json);
 		JSONObject obj = (JSONObject) o;
+		this.grid = new NozeTile[NozeModel.WIDTH][NozeModel.HEIGHT];
 		for (int i = 0; i < this.grid.length; i++)
 			for (int j = 0; j < this.grid[i].length; j++)
 				this.grid[i][j] = new NozeTile((String) obj.get("" + i + "," + j));
@@ -80,6 +82,20 @@ public class NozeModel extends JSONable {
 
 	public NozeTile getAt(int x, int y) {
 		return grid[x % WIDTH][y % HEIGHT];
+	}
+
+	public boolean equals(Object object) {
+		if (!(object instanceof NozeModel))
+			return false;
+		NozeModel remote = (NozeModel) object;
+		for (int i = 0; i < this.grid.length; i++) {
+			for (int j = 0; j < this.grid[i].length; j++) {
+				if (!this.getAt(i, j).getTerrain().equals(remote.getAt(i, j).getTerrain())) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	private NozeTile[][] defaultGrid() {

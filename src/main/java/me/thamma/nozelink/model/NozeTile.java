@@ -66,7 +66,7 @@ public class NozeTile extends JSONable {
 	public JSONObject toJSON() {
 		JSONObject object = new JSONObject();
 		object.put("terrain", this.terrain.toString());
-		object.put("entity", this.entity.toJSON());
+		object.put("entity", this.entity.toJSON().toJSONString());
 		return object;
 	}
 

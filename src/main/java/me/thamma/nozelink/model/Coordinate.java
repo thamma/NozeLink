@@ -32,4 +32,9 @@ public class Coordinate {
 		this.y = Math.floorMod(y, NozeModel.HEIGHT);
 	}
 
+	@Override
+	public String toString() {
+		return "(" + this.x + "," + this.y + ")";
+	}
+
 }

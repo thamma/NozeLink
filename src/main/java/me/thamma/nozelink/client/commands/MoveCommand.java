@@ -34,6 +34,7 @@ public class MoveCommand extends Command {
 
 	@Override
 	public void execute(NozeServer server, NozeModel model) {
+		System.out.println("movePlayer called: " + playerId + " dir: " + direction);
 		model.movePlayer(this.direction, this.playerId);
 		server.sendEvent(new UpdateModelEvent(model));
 	}

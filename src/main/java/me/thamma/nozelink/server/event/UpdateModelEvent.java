@@ -21,7 +21,7 @@ public class UpdateModelEvent extends Event {
 	public JSONObject toJSON() {
 		JSONObject out = model.toJSON();
 		out.put("type", "UpdateModelEvent");
-		System.out.println("sending" + out.toJSONString());
+		System.out.println("sending updatemodel event");
 		return out;
 	}
 

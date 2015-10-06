@@ -7,14 +7,6 @@ import me.thamma.nozelink.client.NozeClient;
 import me.thamma.nozelink.gui.client.game.ClientGamePane;
 import me.thamma.nozelink.gui.client.login.ClientLoginStage;
 import me.thamma.nozelink.model.NozeModel;
-//import me.thamma.nozelinkclient.commands.Command;
-//import me.thamma.nozelinkclient.gui.Grass;
-//import me.thamma.nozelinkclient.gui.NozePane;
-//import me.thamma.nozelinkclient.gui.Player1;
-//import me.thamma.nozelinkclient.gui.Player2;
-//import me.thamma.nozelinkclient.gui.Rock;
-//import me.thamma.nozelinkclient.gui.Woods;
-//import me.thamma.nozelinkserver.NozeServer;
 import me.thamma.nozelink.server.NozeServer;
 
 public class NozeGui extends Application {
