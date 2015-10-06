@@ -6,8 +6,14 @@ This is what's up to do
   - [ ] Server Wizard
     - [ ] live log
     - [ ] shutdown button
-  - [ ] Handle sever shutdown/kill
-  - [ ] Handle client shutdown/kill
+  - [ ] Handle shutdown
+  - [ ] graphics
+    - [ ] update imaged
+    - [ ] fix image size / make resizable
+    - [ ] consider new objects
+
+- [ ] Model
+  - [ ] random object to determine random numbers in O(1)
 
 - [ ] ServerUtils mockup
   - [ ] Killing server/client
