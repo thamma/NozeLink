@@ -14,6 +14,11 @@ This is what's up to do
 
 - [ ] Model
   - [ ] random object to determine random numbers in O(1)
+  - [ ] smart world rendering
+    - [ ] algorithm to add structures
+      - connected lakes
+      - connected forests
+  - [ ] generation of tile in O(1)
 
 - [ ] ServerUtils mockup
   - [ ] Killing server/client
