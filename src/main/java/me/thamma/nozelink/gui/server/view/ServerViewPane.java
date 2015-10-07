@@ -1,4 +1,4 @@
-package me.thamma.nozelink.gui.client.login;
+package me.thamma.nozelink.gui.server.view;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,62 +18,82 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import me.thamma.nozelink.client.NozeClient;
 import me.thamma.nozelink.gui.NozeGui;
-import me.thamma.nozelink.gui.client.game.ClientGameStage;
-import me.thamma.nozelink.gui.server.login.ServerLoginStage;
+import me.thamma.nozelink.gui.client.login.ClientLoginStage;
+import me.thamma.nozelink.server.NozeServer;
 
-public class ClientLoginPane extends GridPane {
+public class ServerViewPane extends GridPane {
 	private Button connect;
 	private TextField portField;
-	private TextField ipField;
+	private TextField playerField;
 	private NozeGui main;
 
-	public ClientLoginPane(NozeGui gui) {
+	public ServerViewPane(NozeGui gui) {
 		super();
 		this.main = gui;
 		this.setPrefWidth(500);
 		this.setPrefHeight(320);
 		this.setAlignment(Pos.CENTER);
 		this.setHgap(10);
-		this.setVgap(10);
+		this.setVgap(25);
 		this.setPadding(new Insets(0, 0, 0, 0));
 		this.setId("login");
-		Text scenetitle = new Text("NozeLink Login");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-		this.add(scenetitle, 1, 0);
-		// main.scene.getStylesheets()
-		// .addAll(this.getClass().getResource("../resources/style.css").toExternalForm());
-		Label ipLabel = new Label("Ip:");
-		this.add(ipLabel, 0, 1);
 
-		ipField = new TextField("localhost");
-		this.add(ipField, 1, 1);
-		setMaxLength(ipField, 20);
-		ipField.setOnKeyPressed((event) -> {
-			handler.handle(event);
+		Text scenetitle = new Text("NozeLink Server View");
+		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		this.add(scenetitle, 0, 0, 3, 1);
+		Label playerLabel = new Label("max Players:");
+		this.add(playerLabel, 0, 1);
+
+		this.playerField = new TextField("2");
+		this.playerField.setPrefWidth(50);
+		this.playerField.setOnKeyPressed((event) -> {
+			// handler.handle(event);
 			if (event.getCode().equals(KeyCode.ENTER))
 				buttonClick();
 		});
+		this.add(playerField, 1, 1);
+		setMaxLength(playerField, 3);
 
-		Label portLabel = new Label("@");
+		Label portLabel = new Label("at Port:");
 		this.add(portLabel, 2, 1);
 
 		portField = new TextField("80");
 		portField.setPrefWidth(50);
 		setMaxLength(portField, 5);
 		this.add(portField, 3, 1);
+
+		main.stage.getScene().setOnKeyTyped((event) -> {
+			handler.handle(event);
+		});
+
 		portField.setOnKeyPressed((event) -> {
+			handler.handle(event);
 			if (event.getCode().equals(KeyCode.ENTER))
 				buttonClick();
 		});
 
-		connect = new Button("Connect");
+		connect = new Button("Launch Server");
 		connect.setOnAction((event) -> {
 			buttonClick();
 		});
-		this.add(connect, 1, 2);
+		this.add(connect, 1, 2, 4, 1);
 	}
+
+	EventHandler<KeyEvent> handler = new EventHandler<KeyEvent>() {
+		final KeyCombination combo = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN,
+				KeyCombination.SHIFT_DOWN);
+
+		public void handle(KeyEvent t) {
+			System.out.println("switchting scene");
+			if (main.server != null)
+				return;
+			if (combo.match(t))
+				Platform.runLater(() -> {
+					main.stage.setScene(new ClientLoginStage(main));
+				});
+		}
+	};
 
 	private void setMaxLength(TextField field, int limit) {
 		field.lengthProperty().addListener((observable, oldValue, newValue) -> {
@@ -83,37 +103,25 @@ public class ClientLoginPane extends GridPane {
 		});
 	}
 
-	EventHandler<KeyEvent> handler = new EventHandler<KeyEvent>() {
-		final KeyCombination combo = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN,
-				KeyCombination.SHIFT_DOWN);
-
-		public void handle(KeyEvent t) {
-			if (combo.match(t))
-				Platform.runLater(() -> {
-					main.stage.setScene(new ServerLoginStage(main));
-				});
-		}
-	};
-
 	private void buttonClick() {
 		if (connect.isDisabled())
 			return;
 		final int port;
+		final int count;
 		try {
 			port = Integer.valueOf(portField.getText());
+			count = Integer.valueOf(playerField.getText());
 		} catch (NumberFormatException e) {
 			return;
 		}
-		String ip = ipField.getText();
-		connect.setText("Connecting . . .");
-		ipField.setDisable(true);
+		connect.setText("Launching . . .");
 		portField.setDisable(true);
 		connect.setDisable(true);
 		TimerTask run = new TimerTask() {
 
 			@Override
 			public void run() {
-				Platform.runLater(() -> connect(port, ip));
+				Platform.runLater(() -> connect(port, count));
 			}
 
 		};
@@ -121,27 +129,30 @@ public class ClientLoginPane extends GridPane {
 		t.schedule(run, 40);
 	}
 
-	private void connect(int port, String ip) {
-		if (main.client == null) {
+	private void connect(int port, int count) {
+		if (main.server == null) {
 			try {
-				// establish connection
-				main.client = new NozeClient(main, ip, port);
 				Platform.runLater(() -> {
-					main.stage.setScene(new ClientGameStage(main));
-					main.clientView.redraw();
+					connect.setDisable(true);
+					connect.setText("Launched");
+				});
+				new Thread(() -> {
+					try {
+						main.server = new NozeServer(port, count);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				});
 			} catch (Exception e) {
-				main.client = null;
-				connect.setText("Error connecting");
-				ipField.setDisable(false);
+				connect.setText("Error launching");
 				portField.setDisable(false);
 				e.printStackTrace();
 				TimerTask run = new TimerTask() {
-
 					@Override
 					public void run() {
 						Platform.runLater(() -> {
-							connect.setText("Connect");
+							connect.setText("Launch Server");
 							connect.setDisable(false);
 						});
 					}

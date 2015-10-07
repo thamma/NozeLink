@@ -28,13 +28,13 @@ public class Coordinate {
 	}
 
 	public void assertPositive() {
-		if (x < 0)
+		while (x < 0)
 			x += NozeModel.WIDTH;
-		if (x >= NozeModel.WIDTH)
+		while  (x >= NozeModel.WIDTH)
 			x -= NozeModel.WIDTH;
-		if (y < 0)
+		while (y < 0)
 			y += NozeModel.HEIGHT;
-		if (y >= NozeModel.HEIGHT)
+		while (y >= NozeModel.HEIGHT)
 			y -= NozeModel.HEIGHT;
 	}
 

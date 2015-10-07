@@ -3,9 +3,7 @@ package me.thamma.nozelink.gui.client.game;
 import javafx.application.Platform;
 import javafx.scene.layout.GridPane;
 import me.thamma.nozelink.gui.NozeGui;
-import me.thamma.nozelink.model.Coordinate;
 import me.thamma.nozelink.model.NozeModel;
-import me.thamma.nozelink.model.entity.EntityPlayer;
 
 public class ClientGamePane extends GridPane {
 

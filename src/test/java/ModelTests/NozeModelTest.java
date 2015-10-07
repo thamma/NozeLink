@@ -1,8 +1,6 @@
 package ModelTests;
 
-import static org.junit.Assert.*;
-
-import java.io.IOException;
+import static org.junit.Assert.assertTrue;
 
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
@@ -10,14 +8,6 @@ import org.junit.Test;
 import me.thamma.nozelink.model.Coordinate;
 import me.thamma.nozelink.model.NozeModel;
 import me.thamma.nozelink.model.entity.EntityPlayer;
-import me.thamma.nozelink.model.entity.TerrainEntity;
-import me.thamma.serverutils.Client;
-import me.thamma.serverutils.ClientInputHandler;
-import me.thamma.serverutils.ClientServerInputHandler;
-import me.thamma.serverutils.Server;
-import me.thamma.serverutils.ServerClientInputHandler;
-import me.thamma.serverutils.ServerConnection;
-import me.thamma.serverutils.ServerInputHandler;
 
 public class NozeModelTest {
 

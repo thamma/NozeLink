@@ -1,4 +1,4 @@
-package me.thamma.nozelink.gui.client.game.tiles;
+package me.thamma.nozelink.gui.client.game;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

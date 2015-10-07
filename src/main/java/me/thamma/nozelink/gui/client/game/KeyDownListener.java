@@ -1,10 +1,10 @@
-package me.thamma.nozelink.gui.client;
+package me.thamma.nozelink.gui.client.game;
 
 import javafx.scene.input.KeyEvent;
 import me.thamma.nozelink.client.commands.MoveCommand;
 import me.thamma.nozelink.gui.NozeGui;
 
-public class NozeGuiListener {
+public class KeyDownListener {
 
 	public static void onKeyDown(NozeGui nozeClient, KeyEvent event) {
 		int id = nozeClient.client.getId();

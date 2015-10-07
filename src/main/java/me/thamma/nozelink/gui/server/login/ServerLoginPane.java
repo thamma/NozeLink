@@ -1,4 +1,4 @@
-package me.thamma.nozelink.gui.server;
+package me.thamma.nozelink.gui.server.login;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,6 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import me.thamma.nozelink.gui.NozeGui;
 import me.thamma.nozelink.gui.client.login.ClientLoginStage;
+import me.thamma.nozelink.gui.server.view.ServerViewStage;
 import me.thamma.nozelink.server.NozeServer;
 
 public class ServerLoginPane extends GridPane {
@@ -48,7 +49,7 @@ public class ServerLoginPane extends GridPane {
 		this.playerField = new TextField("2");
 		this.playerField.setPrefWidth(50);
 		this.playerField.setOnKeyPressed((event) -> {
-			handler.handle(event);
+			// handler.handle(event);
 			if (event.getCode().equals(KeyCode.ENTER))
 				buttonClick();
 		});
@@ -63,8 +64,12 @@ public class ServerLoginPane extends GridPane {
 		setMaxLength(portField, 5);
 		this.add(portField, 3, 1);
 
-		portField.setOnKeyPressed((event) -> {
+		main.stage.getScene().setOnKeyTyped((event) -> {
 			handler.handle(event);
+		});
+
+		portField.setOnKeyPressed((event) -> {
+			// handler.handle(event);
 			if (event.getCode().equals(KeyCode.ENTER))
 				buttonClick();
 		});
@@ -81,6 +86,9 @@ public class ServerLoginPane extends GridPane {
 				KeyCombination.SHIFT_DOWN);
 
 		public void handle(KeyEvent t) {
+			System.out.println("switchting scene");
+			if (main.server != null)
+				return;
 			if (combo.match(t))
 				Platform.runLater(() -> {
 					main.stage.setScene(new ClientLoginStage(main));
@@ -129,7 +137,15 @@ public class ServerLoginPane extends GridPane {
 					connect.setDisable(true);
 					connect.setText("Launched");
 				});
-				main.server = new NozeServer(port, count);
+				new Thread(() -> {
+					try {
+						main.server = new NozeServer(port, count);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
+				main.stage.setScene(new ServerViewStage(main, port, count));
 			} catch (Exception e) {
 				connect.setText("Error launching");
 				portField.setDisable(false);
