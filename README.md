@@ -4,6 +4,7 @@
 This is what's up to do 
 - [ ] Gui stuff
   - [ ] Server Wizard
+    - [ ] gui
     - [ ] live log
     - [ ] shutdown button
   - [ ] Handle shutdown
@@ -21,9 +22,10 @@ This is what's up to do
   - [ ] generation of tile in O(1)
 
 - [ ] ServerUtils mockup
-  - [ ] Killing server/client
+  - [x] Killing server/client
   - [ ] connecting whilst running or fixed size
 
 - [ ] Handle communication
   - [ ] Reduce updates to modified-only
   - [ ] Reduce lag by having clients pre-process stuff
+    - [x] check commands
