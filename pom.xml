@@ -4,7 +4,7 @@
 	<groupId>me.thamma.nozelink</groupId>
 	<artifactId>nozelink</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.23-SNAPSHOT</version>
+	<version>1.0.25-SNAPSHOT</version>
 	<name>nozelink</name>
 	<url>http://maven.apache.org</url>
 	<properties>

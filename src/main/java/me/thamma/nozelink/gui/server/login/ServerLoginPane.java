@@ -49,7 +49,7 @@ public class ServerLoginPane extends GridPane {
 		this.playerField = new TextField("2");
 		this.playerField.setPrefWidth(50);
 		this.playerField.setOnKeyPressed((event) -> {
-			// handler.handle(event);
+			 handler.handle(event);
 			if (event.getCode().equals(KeyCode.ENTER))
 				buttonClick();
 		});
@@ -69,7 +69,7 @@ public class ServerLoginPane extends GridPane {
 		});
 
 		portField.setOnKeyPressed((event) -> {
-			// handler.handle(event);
+			 handler.handle(event);
 			if (event.getCode().equals(KeyCode.ENTER))
 				buttonClick();
 		});

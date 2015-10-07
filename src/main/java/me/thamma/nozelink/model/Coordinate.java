@@ -11,6 +11,10 @@ public class Coordinate {
 		this.y = y;
 	}
 
+	public Coordinate clone() {
+		return new Coordinate(this.x, this.y);
+	}
+	
 	public void moveById(int id) {
 		switch (id) {
 		case 0:

@@ -5,7 +5,7 @@ import me.thamma.nozelink.gui.client.game.TilePane;
 public class Water extends TilePane {
 
 	public Water() {
-		super("/res/zelda/water.png");
+		super("/res/coo/water.jpg");
 	}
 
 }

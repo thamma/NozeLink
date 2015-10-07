@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import me.thamma.nozelink.model.Coordinate;
 import me.thamma.nozelink.model.NozeModel;
+import me.thamma.nozelink.model.TerrainObject;
 import me.thamma.nozelink.model.entity.EntityPlayer;
 
 public class NozeModelTest {
@@ -38,6 +39,26 @@ public class NozeModelTest {
 		System.out.println(model.getAt(newCoord));
 		assertTrue("Player not found at expected location after two moves",
 				model.getAt(newCoord).getEntity() instanceof EntityPlayer);
+	}
+
+	@Test
+	public void initBoardAssumeWaterLake() {
+		int count = 0;
+		NozeModel model = new NozeModel();
+		for (int i = 0; i < model.getGrid().length; i++) {
+			for (int j = 0; j < model.getGrid()[i].length; j++) {
+				if (model.getAt(i, j).getTerrain().equals(TerrainObject.WATER)) {
+					count++;
+				}
+			}
+		}
+		System.out.println(count);
+	}
+
+	@Test
+	public void initBoardNonNull() {
+		NozeModel model = new NozeModel();
+		model.getAt(0, 0);
 	}
 
 }

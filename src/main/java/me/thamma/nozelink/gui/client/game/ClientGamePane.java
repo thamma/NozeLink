@@ -13,9 +13,8 @@ public class ClientGamePane extends GridPane {
 		super();
 		this.main = gui;
 		gui.clientView = this;
-//		main.model.setEntityAt(new Coordinate(0, 0), new EntityPlayer(0));
-		this.setPrefWidth(512);
-		this.setPrefHeight(512);
+		this.setPrefWidth(NozeModel.SIZE * TilePane.SIZE);
+		this.setPrefHeight(NozeModel.SIZE * TilePane.SIZE);
 	}
 
 	public void redraw() {

@@ -6,9 +6,11 @@ import javafx.scene.layout.Pane;
 
 public class TilePane extends Pane {
 
+	public static final int SIZE = 64;
+
 	public TilePane(String res) {
 		super();
-		this.resize(50, 50);
+		this.resize(SIZE, SIZE);
 		Image img = new Image(res);
 		ImageView imgView = new ImageView(img);
 		this.getChildren().add(imgView);

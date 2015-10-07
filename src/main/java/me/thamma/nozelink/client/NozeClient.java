@@ -23,7 +23,7 @@ public class NozeClient extends Client {
 	}
 
 	public void sendCommand(Command command) {
-		if (command.validate(main.model))
+//		if (command.validate(main.model))
 			this.pushMessage(command.toJSON().toJSONString());
 	}
 

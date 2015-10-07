@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import me.thamma.nozelink.client.NozeClient;
 import me.thamma.nozelink.gui.client.game.ClientGamePane;
+import me.thamma.nozelink.gui.client.login.ClientLoginPane;
 import me.thamma.nozelink.gui.client.login.ClientLoginStage;
+import me.thamma.nozelink.gui.server.view.ServerViewStage;
 import me.thamma.nozelink.model.NozeModel;
 import me.thamma.nozelink.server.NozeServer;
 
@@ -20,7 +22,9 @@ public class NozeGui extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
+		this.model = new NozeModel();
 		stage.setScene(new ClientLoginStage(this));
+		stage.setScene(new ServerViewStage(this, 80, 1));
 		stage.getIcons().add(new Image("/res/icon.png"));
 		stage.show();
 	}

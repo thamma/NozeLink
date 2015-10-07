@@ -14,7 +14,6 @@ public class ClientGameStage extends Scene {
 		this.getStylesheets().addAll(this.getClass().getResource("/res/style.css").toExternalForm());
 		mainGui.stage.setTitle("NozeLink");
 		this.setOnKeyPressed((event) -> {
-			// TODO Check if this works, else restore comment
 			KeyDownListener.onKeyDown(mainGui, event);
 		});
 		mainGui.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

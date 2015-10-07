@@ -4,8 +4,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import me.thamma.nozelink.gui.client.game.TilePane;
 import me.thamma.nozelink.model.entity.EntityFactory;
 import me.thamma.nozelink.model.entity.EntityNone;
 import me.thamma.nozelink.model.entity.EntityPlayer;
@@ -41,7 +42,12 @@ public class NozeTile extends JSONable {
 	public Pane getDisplayPane() {
 		Pane pane = this.terrain.getDisplayPane();
 		if (entity instanceof EntityPlayer) {
-			pane.getChildren().add(new Label("" + ((EntityPlayer) entity).getId()));
+			EntityPlayer player = (EntityPlayer) entity;
+			if (player.getId() == 1) {
+				pane.getChildren().add(new TilePane("/res/coo/player2.png"));
+			} else {
+				pane.getChildren().add(new TilePane("/res/coo/player1.png"));
+			}
 		}
 		return pane;
 	}

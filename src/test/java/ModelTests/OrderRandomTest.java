@@ -23,4 +23,13 @@ public class OrderRandomTest {
 		}
 	}
 
+	@Test
+	public void allBelowCap() {
+		int cap = 1337;
+		OrderRandom random = new OrderRandom(cap, cap);
+		for (int i = 0; i < 100; i++) {
+			assertTrue(random.getNth(i) < cap);
+		}
+	}
+
 }

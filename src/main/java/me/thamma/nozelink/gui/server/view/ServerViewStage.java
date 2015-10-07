@@ -22,7 +22,7 @@ public class ServerViewStage extends Scene {
 				e.printStackTrace();
 			}
 		}).start();
-		mainGui.stage.setTitle("NozeLink server setup");
+		mainGui.stage.setTitle("NozeLink server view");
 		mainGui.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			public void handle(WindowEvent we) {
 				try {

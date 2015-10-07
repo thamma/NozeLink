@@ -51,6 +51,10 @@ public class MoveCommand extends Command {
 						from = new Coordinate(i, j);
 						break outermost;
 					}
+		if (from == null) {
+			System.out.println("no player found");
+			return false;
+		}
 		from.moveById(this.direction);
 		if (model.getAt(from).getTerrain().getOccupaion().equals(OccupyType.FREE)) {
 			return !(model.getAt(from).getEntity() instanceof EntityPlayer);

@@ -23,9 +23,12 @@ import me.thamma.serverutils.ServerNewConnectionHandler;
 public class NozeServer extends Server {
 
 	private NozeModel model;
+	public int port, size;
 
 	public NozeServer(int port, int size) throws IOException {
 		super(port, size);
+		this.port = port;
+		this.size = size;
 		if (model == null)
 			this.model = new NozeModel();
 	}
@@ -50,17 +53,12 @@ public class NozeServer extends Server {
 			@Override
 			public void handle(Server server, ServerConnection connection) {
 				NozeServer nozeserver = (NozeServer) server;
-				// should already be set
 				if (model == null)
 					nozeserver.model = new NozeModel();
 				Coordinate coord = nozeserver.model.randomFreeCoordinate();
 				nozeserver.model.setEntityAt(coord, new EntityPlayer(connection.getId()));
-				try {
-					connection.message(new UpdateModelEvent(nozeserver.model).toJSON().toJSONString());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				System.out.println(model.getAt(coord).getEntity().toJSON());
+				nozeserver.sendEvent(new UpdateModelEvent(nozeserver.model));
 			}
 		};
 	}

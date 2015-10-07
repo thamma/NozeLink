@@ -17,12 +17,12 @@ public class NozeModel extends JSONable {
 	private NozeTile[][] grid;
 	private OrderRandom random;
 
-	public static final int SIZE = 24;
+	public static final int SIZE = 10;
 
 	public NozeModel(int seed) {
 		this.random = new OrderRandom(seed);
-		this.grid = defaultGrid();
-		// this.grid = new WorldGen(seed, SIZE).getGrid();
+		// this.grid = defaultGrid();
+		this.grid = new WorldGen(seed, SIZE).getGrid();
 	}
 
 	public NozeModel() {
@@ -98,7 +98,7 @@ public class NozeModel extends JSONable {
 	}
 
 	private NozeTile[][] defaultGrid() {
-		final int[] terrainRandom = { 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 3, 2 };
+		final int[] terrainRandom = { 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 3, 4, 4, };
 		NozeTile[][] out = new NozeTile[SIZE][SIZE];
 		for (int i = 0; i < out.length; i++) {
 			for (int j = 0; j < out[i].length; j++) {

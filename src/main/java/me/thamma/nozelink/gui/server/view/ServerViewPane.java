@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -20,6 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import me.thamma.nozelink.gui.NozeGui;
 import me.thamma.nozelink.gui.client.login.ClientLoginStage;
+import me.thamma.nozelink.gui.server.login.ServerLoginStage;
 import me.thamma.nozelink.server.NozeServer;
 
 public class ServerViewPane extends GridPane {
@@ -31,37 +33,64 @@ public class ServerViewPane extends GridPane {
 	public ServerViewPane(NozeGui gui) {
 		super();
 		this.main = gui;
-		this.setPrefWidth(500);
-		this.setPrefHeight(320);
+		this.setPrefWidth(600);
+		this.setPrefHeight(400);
 		this.setAlignment(Pos.CENTER);
 		this.setHgap(10);
 		this.setVgap(25);
-		this.setPadding(new Insets(0, 0, 0, 0));
+		this.setPadding(new Insets(10, 10, 10, 10));
 		this.setId("login");
 
-		Text scenetitle = new Text("NozeLink Server View");
+		Text scenetitle = new Text("NozeLink Server manager");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-		this.add(scenetitle, 0, 0, 3, 1);
-		Label playerLabel = new Label("max Players:");
-		this.add(playerLabel, 0, 1);
+		this.add(scenetitle, 0, 0, 1, 2);
+
+		Button shutdownButton = new Button("Shutdown");
+		shutdownButton.setOnAction((event) -> {
+			try {
+				if (main.server != null)
+					main.server.kill();
+				main.stage.setScene(new ServerLoginStage(main));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		this.add(shutdownButton, 1, 0, 1, 2);
+
+		Label portLabel = new Label("" + 80);
+		this.add(portLabel, 2, 0);
+		Label countLabel = new Label("" + 2);
+		this.add(countLabel, 2, 1);
+
+		TextArea log = new TextArea("test");
+		log.setPrefHeight(200);
+		this.add(log, 0, 2, 2, 1);
+
+		// Label playerLabel = new Label("max Players:");
+		// this.add(playerLabel, 0, 1);
 
 		this.playerField = new TextField("2");
-		this.playerField.setPrefWidth(50);
+		// this.playerField.setPrefWidth(10);
 		this.playerField.setOnKeyPressed((event) -> {
 			// handler.handle(event);
 			if (event.getCode().equals(KeyCode.ENTER))
 				buttonClick();
 		});
-		this.add(playerField, 1, 1);
+		// this.add(playerField, 1, 1);
 		setMaxLength(playerField, 3);
 
-		Label portLabel = new Label("at Port:");
-		this.add(portLabel, 2, 1);
+		// Label portLabel = new Label("at Port:");
+		// this.add(portLabel, 2, 1);
 
 		portField = new TextField("80");
 		portField.setPrefWidth(50);
 		setMaxLength(portField, 5);
-		this.add(portField, 3, 1);
+		// this.add(portField, 3, 1);
+
+		System.out.println(main == null);
+		System.out.println(main.stage == null);
+		System.out.println(main.stage.getScene() == null);
 
 		main.stage.getScene().setOnKeyTyped((event) -> {
 			handler.handle(event);
@@ -77,7 +106,7 @@ public class ServerViewPane extends GridPane {
 		connect.setOnAction((event) -> {
 			buttonClick();
 		});
-		this.add(connect, 1, 2, 4, 1);
+		// this.add(connect, 1, 2, 4, 1);
 	}
 
 	EventHandler<KeyEvent> handler = new EventHandler<KeyEvent>() {
@@ -88,6 +117,7 @@ public class ServerViewPane extends GridPane {
 			System.out.println("switchting scene");
 			if (main.server != null)
 				return;
+
 			if (combo.match(t))
 				Platform.runLater(() -> {
 					main.stage.setScene(new ClientLoginStage(main));

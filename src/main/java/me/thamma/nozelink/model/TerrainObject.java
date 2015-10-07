@@ -2,13 +2,15 @@ package me.thamma.nozelink.model;
 
 import javafx.scene.layout.Pane;
 import me.thamma.nozelink.gui.client.game.tiles.Grass;
+import me.thamma.nozelink.gui.client.game.tiles.Ground;
 import me.thamma.nozelink.gui.client.game.tiles.Rock;
 import me.thamma.nozelink.gui.client.game.tiles.Water;
 import me.thamma.nozelink.gui.client.game.tiles.Woods;
 
 public enum TerrainObject {
 
-	GRASS(OccupyType.FREE), WOODS(OccupyType.FREE), ROCK(OccupyType.BUILT), WATER(OccupyType.WATER);
+	GRASS(OccupyType.FREE), WOODS(OccupyType.FREE), GROUND(OccupyType.FREE), ROCK(OccupyType.BUILT), WATER(
+			OccupyType.WATER);
 
 	private OccupyType occupy;
 
@@ -28,6 +30,8 @@ public enum TerrainObject {
 			return new Rock();
 		case WATER:
 			return new Water();
+		case GROUND:
+			return new Ground();
 		default:
 			return new Grass();
 		}
