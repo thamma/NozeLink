@@ -9,18 +9,20 @@ import org.json.simple.parser.ParseException;
 import me.thamma.nozelink.model.entity.EntityNone;
 import me.thamma.nozelink.model.entity.EntityPlayer;
 import me.thamma.nozelink.model.entity.TerrainEntity;
+import utils.JSONable;
+import utils.OrderRandom;
 
 public class NozeModel extends JSONable {
 
 	private NozeTile[][] grid;
-	int seed;
+	private OrderRandom random;
 
-	public static final int WIDTH = 24;
-	public static final int HEIGHT = 24;
+	public static final int SIZE = 24;
 
 	public NozeModel(int seed) {
-		this.seed = seed;
+		this.random = new OrderRandom(seed);
 		this.grid = defaultGrid();
+		// this.grid = new WorldGen(seed, SIZE).getGrid();
 	}
 
 	public NozeModel() {
@@ -54,7 +56,7 @@ public class NozeModel extends JSONable {
 		JSONParser parser = new JSONParser();
 		Object o = parser.parse(json);
 		JSONObject obj = (JSONObject) o;
-		this.grid = new NozeTile[NozeModel.WIDTH][NozeModel.HEIGHT];
+		this.grid = new NozeTile[NozeModel.SIZE][NozeModel.SIZE];
 		for (int i = 0; i < this.grid.length; i++)
 			for (int j = 0; j < this.grid[i].length; j++)
 				this.grid[i][j] = new NozeTile((String) obj.get("" + i + "," + j));
@@ -62,9 +64,9 @@ public class NozeModel extends JSONable {
 
 	public Coordinate randomFreeCoordinate() {
 		Random r = new Random();
-		Coordinate out = new Coordinate(r.nextInt(WIDTH), r.nextInt(HEIGHT));
+		Coordinate out = new Coordinate(r.nextInt(SIZE), r.nextInt(SIZE));
 		while (!this.getAt(out).getTerrain().getOccupaion().equals(OccupyType.FREE))
-			out = new Coordinate(r.nextInt(WIDTH), r.nextInt(HEIGHT));
+			out = new Coordinate(r.nextInt(SIZE), r.nextInt(SIZE));
 		return out;
 	}
 
@@ -78,7 +80,7 @@ public class NozeModel extends JSONable {
 	}
 
 	public NozeTile getAt(int x, int y) {
-		return grid[x % WIDTH][y % HEIGHT];
+		return grid[x % SIZE][y % SIZE];
 	}
 
 	public boolean equals(Object object) {
@@ -96,12 +98,14 @@ public class NozeModel extends JSONable {
 	}
 
 	private NozeTile[][] defaultGrid() {
-		Random r = new Random(seed);
-		final int[] terrainRandom = { 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 3, 3, 3, 2 };
-		NozeTile[][] out = new NozeTile[WIDTH][HEIGHT];
+		final int[] terrainRandom = { 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 3, 2 };
+		NozeTile[][] out = new NozeTile[SIZE][SIZE];
 		for (int i = 0; i < out.length; i++) {
 			for (int j = 0; j < out[i].length; j++) {
-				TerrainObject terrain = TerrainObject.values()[terrainRandom[r.nextInt(terrainRandom.length)]];
+				Coordinate coord = new Coordinate(i, j);
+				TerrainObject terrain = TerrainObject
+						.values()[terrainRandom[random.getNth(coord.encode()) % terrainRandom.length]
+								% TerrainObject.values().length];
 				NozeTile tile = new NozeTile(terrain);
 				out[i][j] = tile;
 			}

@@ -10,6 +10,7 @@ import me.thamma.nozelink.model.entity.EntityFactory;
 import me.thamma.nozelink.model.entity.EntityNone;
 import me.thamma.nozelink.model.entity.EntityPlayer;
 import me.thamma.nozelink.model.entity.TerrainEntity;
+import utils.JSONable;
 
 public class NozeTile extends JSONable {
 

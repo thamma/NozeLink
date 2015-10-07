@@ -1,5 +1,7 @@
 package me.thamma.nozelink.model;
 
+import utils.Cantor;
+
 public class Coordinate {
 
 	public int x, y;
@@ -29,13 +31,13 @@ public class Coordinate {
 
 	public void assertPositive() {
 		while (x < 0)
-			x += NozeModel.WIDTH;
-		while  (x >= NozeModel.WIDTH)
-			x -= NozeModel.WIDTH;
+			x += NozeModel.SIZE;
+		while (x >= NozeModel.SIZE)
+			x -= NozeModel.SIZE;
 		while (y < 0)
-			y += NozeModel.HEIGHT;
-		while (y >= NozeModel.HEIGHT)
-			y -= NozeModel.HEIGHT;
+			y += NozeModel.SIZE;
+		while (y >= NozeModel.SIZE)
+			y -= NozeModel.SIZE;
 	}
 
 	@Override
@@ -43,4 +45,15 @@ public class Coordinate {
 		return "(" + this.x + "," + this.y + ")";
 	}
 
+	public static Coordinate decode(int i) {
+		return new Coordinate(Cantor.computeX(i), Cantor.computeY(i));
+	}
+
+	public int encode() {
+		return encode(this);
+	}
+
+	public static int encode(Coordinate coord) {
+		return Cantor.compute(coord.x, coord.y);
+	}
 }
