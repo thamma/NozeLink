@@ -13,6 +13,8 @@ public class TilePane extends Pane {
 		this.resize(SIZE, SIZE);
 		Image img = new Image(res);
 		ImageView imgView = new ImageView(img);
+		imgView.fitWidthProperty().bind(this.widthProperty());
+		imgView.fitHeightProperty().bind(this.heightProperty());
 		this.getChildren().add(imgView);
 	}
 }

@@ -74,8 +74,8 @@ public class ServerViewPane extends GridPane {
 		// this.playerField.setPrefWidth(10);
 		this.playerField.setOnKeyPressed((event) -> {
 			// handler.handle(event);
-			if (event.getCode().equals(KeyCode.ENTER))
-				buttonClick();
+//			if (event.getCode().equals(KeyCode.ENTER))
+//				buttonClick();
 		});
 		// this.add(playerField, 1, 1);
 		setMaxLength(playerField, 3);
