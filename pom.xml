@@ -44,11 +44,11 @@
 			<artifactId>json</artifactId>
 			<version>20150729</version>
 		</dependency>
-		<dependency>
-			<groupId>com.github.thamma</groupId>
-			<artifactId>ServerUtils</artifactId>
-			<version>v1.3</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.github.thamma</groupId> -->
+<!-- 			<artifactId>ServerUtils</artifactId> -->
+<!-- 			<version>v1.3</version> -->
+<!-- 		</dependency> -->
 	</dependencies>
 	<build>
 		<plugins>

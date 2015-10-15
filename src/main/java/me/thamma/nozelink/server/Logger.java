@@ -1,5 +1,6 @@
 package me.thamma.nozelink.server;
 
+import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 
 public class Logger {
@@ -14,7 +15,7 @@ public class Logger {
 		this.textArea = textArea;
 	}
 
-	public void log(String message) {
+	public void info(String message) {
 		out("[Info] " + message);
 	}
 
@@ -30,7 +31,9 @@ public class Logger {
 		if (textArea == null) {
 			System.out.println(message);
 		} else {
-			//TODO: Update TextArea
+			Platform.runLater(() -> {
+				textArea.setText(message + "\n" + textArea.getText());
+			});
 		}
 	}
 

@@ -25,11 +25,12 @@ public class NozeServer extends Server {
 
 	private NozeModel model;
 	public int port, size;
+	public Logger logger;
 
-	public NozeServer(int port, int size) throws IOException {
+	public NozeServer(int port) throws IOException {
 		super(port);
+		this.logger = new Logger();
 		this.port = port;
-		this.size = size;
 		if (model == null)
 			this.model = new NozeModel(42);
 	}
@@ -94,6 +95,7 @@ public class NozeServer extends Server {
 								new BigDecimal((long) object.get("direction")).intValue());
 						if (m.validate(model)) {
 							m.execute(nozeserver, model);
+							logger.info("Handling command:\n  " + m.toJSON().toJSONString());
 						}
 						break;
 					default:

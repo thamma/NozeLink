@@ -10,17 +10,10 @@ import me.thamma.nozelink.server.NozeServer;
 
 public class ServerViewStage extends Scene {
 
-	public ServerViewStage(NozeGui mainGui, int port, int playercount) throws IOException {
+	public ServerViewStage(NozeGui mainGui) throws IOException {
 		super(new ServerViewPane(mainGui));
 		this.getRoot().setId("login");
 		this.getStylesheets().addAll(this.getClass().getResource("/res/style.css").toExternalForm());
-		new Thread(() -> {
-			try {
-				mainGui.server = new NozeServer(port, playercount);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}).start();
 		mainGui.stage.setTitle("NozeLink server view");
 		mainGui.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			public void handle(WindowEvent we) {

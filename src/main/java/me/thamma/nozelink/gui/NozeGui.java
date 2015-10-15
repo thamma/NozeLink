@@ -30,7 +30,7 @@ public class NozeGui extends Application {
 		if (args.length == 0) {
 			launch();
 		} else {
-			new NozeServer(80, 1);
+			new NozeServer(80);
 		}
 	}
 

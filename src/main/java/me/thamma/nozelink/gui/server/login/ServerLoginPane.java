@@ -26,7 +26,6 @@ import me.thamma.nozelink.server.NozeServer;
 public class ServerLoginPane extends GridPane {
 	private Button connect;
 	private TextField portField;
-	private TextField playerField;
 	private NozeGui main;
 
 	public ServerLoginPane(NozeGui gui) {
@@ -43,33 +42,21 @@ public class ServerLoginPane extends GridPane {
 		Text scenetitle = new Text("NozeLink Server Wizard");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		this.add(scenetitle, 0, 0, 3, 1);
-		Label playerLabel = new Label("max Players:");
-		this.add(playerLabel, 0, 1);
-
-		this.playerField = new TextField("2");
-		this.playerField.setPrefWidth(50);
-		this.playerField.setOnKeyPressed((event) -> {
-			 handler.handle(event);
-			if (event.getCode().equals(KeyCode.ENTER))
-				buttonClick();
-		});
-		this.add(playerField, 1, 1);
-		setMaxLength(playerField, 3);
 
 		Label portLabel = new Label("at Port:");
-		this.add(portLabel, 2, 1);
+		this.add(portLabel, 1, 1);
 
 		portField = new TextField("80");
 		portField.setPrefWidth(50);
 		setMaxLength(portField, 5);
-		this.add(portField, 3, 1);
+		this.add(portField, 2, 1);
 
 		main.stage.getScene().setOnKeyTyped((event) -> {
 			handler.handle(event);
 		});
 
 		portField.setOnKeyPressed((event) -> {
-			 handler.handle(event);
+			handler.handle(event);
 			if (event.getCode().equals(KeyCode.ENTER))
 				buttonClick();
 		});
@@ -78,7 +65,7 @@ public class ServerLoginPane extends GridPane {
 		connect.setOnAction((event) -> {
 			buttonClick();
 		});
-		this.add(connect, 1, 2, 4, 1);
+		this.add(connect, 0, 1);
 	}
 
 	EventHandler<KeyEvent> handler = new EventHandler<KeyEvent>() {
@@ -110,7 +97,6 @@ public class ServerLoginPane extends GridPane {
 		final int count;
 		try {
 			port = Integer.valueOf(portField.getText());
-			count = Integer.valueOf(playerField.getText());
 		} catch (NumberFormatException e) {
 			return;
 		}
@@ -121,7 +107,7 @@ public class ServerLoginPane extends GridPane {
 
 			@Override
 			public void run() {
-				Platform.runLater(() -> connect(port, count));
+				Platform.runLater(() -> connect(port));
 			}
 
 		};
@@ -129,22 +115,16 @@ public class ServerLoginPane extends GridPane {
 		t.schedule(run, 40);
 	}
 
-	private void connect(int port, int count) {
+	private void connect(int port) {
 		if (main.server == null) {
 			try {
 				Platform.runLater(() -> {
 					connect.setDisable(true);
 					connect.setText("Launched");
 				});
-				new Thread(() -> {
-					try {
-						main.server = new NozeServer(port, count);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				});
-				main.stage.setScene(new ServerViewStage(main, port, count));
+				main.server = new NozeServer(port);
+				System.out.println("server==null == " + (main.server == null));
+				main.stage.setScene(new ServerViewStage(main));
 			} catch (Exception e) {
 				connect.setText("Error launching");
 				portField.setDisable(false);

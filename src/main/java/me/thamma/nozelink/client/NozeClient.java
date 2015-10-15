@@ -7,7 +7,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import me.thamma.nozelink.gui.NozeGui;
+import me.thamma.nozelink.gui.client.login.ClientLoginStage;
 import me.thamma.nozelink.model.NozeModel;
 import me.thamma.serverutils.Client;
 import me.thamma.serverutils.ServerConnection;
@@ -24,7 +27,18 @@ public class NozeClient extends Client {
 	}
 
 	public void sendCommand(Command command) {
-		this.sendMessage(command.toJSON().toJSONString());
+		try {
+			this.sendMessage(command.toJSON().toJSONString());
+		} catch (IOException e) {
+			super.kill();
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("");
+			alert.setHeaderText("Connection Lost!");
+			alert.setContentText("Looks like the connection to the server's been lost.\nPlease re-check your connection!");
+			alert.showAndWait();
+			main.client = null;
+			main.stage.setScene(new ClientLoginStage(main));
+		}
 	}
 
 	@Override
