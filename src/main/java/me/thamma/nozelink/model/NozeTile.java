@@ -4,7 +4,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import me.thamma.nozelink.gui.client.game.TilePane;
 import me.thamma.nozelink.model.entity.EntityFactory;

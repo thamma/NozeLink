@@ -10,12 +10,10 @@ import me.thamma.nozelink.model.entity.EntityNone;
 import me.thamma.nozelink.model.entity.EntityPlayer;
 import me.thamma.nozelink.model.entity.TerrainEntity;
 import utils.JSONable;
-import utils.OrderRandom;
 
 public class NozeModel extends JSONable {
 
 	private NozeTile[][] grid;
-	private OrderRandom random;
 
 	public static final int SIZE = 12;
 
@@ -27,8 +25,6 @@ public class NozeModel extends JSONable {
 	}
 
 	public NozeModel(int seed) {
-		this.random = new OrderRandom(seed);
-		// this.grid = defaultGrid();
 		this.grid = new WorldGen(seed, SIZE).getGrid();
 	}
 
@@ -100,22 +96,6 @@ public class NozeModel extends JSONable {
 		return true;
 	}
 
-	private NozeTile[][] defaultGrid() {
-		final int[] terrainRandom = { 0, 0, 0, 0, 1, 1, 2, 2, 2, 2, 3, 4, 4, };
-		NozeTile[][] out = new NozeTile[SIZE][SIZE];
-		for (int i = 0; i < out.length; i++) {
-			for (int j = 0; j < out[i].length; j++) {
-				Coordinate coord = new Coordinate(i, j);
-				TerrainObject terrain = TerrainObject
-						.values()[terrainRandom[random.getNth(coord.encode()) % terrainRandom.length]
-								% TerrainObject.values().length];
-				NozeTile tile = new NozeTile(terrain);
-				out[i][j] = tile;
-			}
-		}
-		return out;
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject toJSON() {
@@ -123,7 +103,6 @@ public class NozeModel extends JSONable {
 		for (int i = 0; i < this.grid.length; i++)
 			for (int j = 0; j < this.grid[i].length; j++)
 				object.put("" + i + "," + j, (String) this.getAt(i, j).toJSON().toJSONString());
-		System.out.println("" + object.toJSONString());
 		return object;
 	}
 

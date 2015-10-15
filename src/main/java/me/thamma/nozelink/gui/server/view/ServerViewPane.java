@@ -84,10 +84,6 @@ public class ServerViewPane extends GridPane {
 		portField.setPrefWidth(50);
 		setMaxLength(portField, 5);
 
-		System.out.println(main == null);
-		System.out.println(main.stage == null);
-		System.out.println(main.stage.getScene() == null);
-
 		main.stage.getScene().setOnKeyTyped((event) -> {
 			handler.handle(event);
 		});

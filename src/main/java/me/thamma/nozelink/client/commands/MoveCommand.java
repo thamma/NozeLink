@@ -52,7 +52,6 @@ public class MoveCommand extends Command {
 						break outermost;
 					}
 		if (from == null) {
-			System.out.println("no player found");
 			return false;
 		}
 		from.moveById(this.direction);

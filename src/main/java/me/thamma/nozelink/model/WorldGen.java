@@ -31,18 +31,10 @@ public class WorldGen {
 	private void popluate() {
 		spawnLake();
 		spawnRidge();
-		// for (int i = 0; i < this.grid.length; i++) {
-		// for (int j = 0; j < this.grid[i].length; j++) {
-		// if (grid[i][j] != null &&
-		// !grid[i][j].getTerrain().equals(TerrainObject.WATER)) {
-		// grid[i][j] = new NozeTile(TerrainObject.GRASS);
-		// }
-		// }
-		// }
 	}
 
 	private final int RIDGESIZE = NozeModel.SIZE;
-	private final int LAKESIZE = NozeModel.SIZE*2;
+	private final int LAKESIZE = NozeModel.SIZE * 2;
 
 	private void spawnRidge() {
 		int x = random.getNth(seed * (size + RIDGESIZE * 3));
@@ -53,7 +45,6 @@ public class WorldGen {
 		for (int i = 0; i < RIDGESIZE; i++) {
 			ridgeAt = ridgeAt.clone();
 			ridgeAt.moveById(random.nextInt(4));
-			System.out.println(ridgeAt);
 			ridge.add(ridgeAt.clone());
 		}
 		for (Coordinate coord : ridge) {
@@ -70,9 +61,7 @@ public class WorldGen {
 		Set<Coordinate> lake = new HashSet<Coordinate>();
 		lake.add(lakeAt);
 		for (int i = 0; i < LAKESIZE; i++) {
-			Coordinate newLake = lakeAt.clone();
 			lakeAt.moveById(random.nextInt(4));
-			System.out.println(lakeAt);
 			lake.add(lakeAt.clone());
 		}
 		for (Coordinate coord : lake) {
@@ -82,8 +71,9 @@ public class WorldGen {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void terraform() {
-
+		//TODO
 	}
 
 	public NozeTile[][] getGrid() {

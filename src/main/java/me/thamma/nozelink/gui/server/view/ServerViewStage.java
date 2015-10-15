@@ -18,7 +18,6 @@ public class ServerViewStage extends Scene {
 			try {
 				mainGui.server = new NozeServer(port, playercount);
 			} catch (Exception e) {
-				System.out.println("Failed to launch server!");
 				e.printStackTrace();
 			}
 		}).start();

@@ -86,7 +86,6 @@ public class ServerLoginPane extends GridPane {
 				KeyCombination.SHIFT_DOWN);
 
 		public void handle(KeyEvent t) {
-			System.out.println("switchting scene");
 			if (main.server != null)
 				return;
 			if (combo.match(t))

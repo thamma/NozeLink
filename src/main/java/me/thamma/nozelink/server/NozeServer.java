@@ -58,7 +58,6 @@ public class NozeServer extends Server {
 					nozeserver.model = new NozeModel();
 				Coordinate coord = nozeserver.model.randomFreeCoordinate();
 				nozeserver.model.setEntityAt(coord, new EntityPlayer(connection.getId()));
-				System.out.println(model.getAt(coord).getEntity().toJSON());
 				nozeserver.sendEvent(new UpdateModelEvent(nozeserver.model));
 			}
 		};

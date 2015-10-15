@@ -9,7 +9,6 @@ import me.thamma.nozelink.model.Coordinate;
 import me.thamma.nozelink.model.NozeModel;
 import me.thamma.nozelink.model.TerrainObject;
 import me.thamma.nozelink.model.entity.EntityPlayer;
-import me.thamma.nozelink.model.entity.TerrainEntity;
 
 public class NozeModelTest {
 
@@ -54,7 +53,7 @@ public class NozeModelTest {
 	@Test
 	public void initBoardAssumeWaterLake() {
 		int count = 0;
-		NozeModel model = new NozeModel();
+		NozeModel model = new NozeModel(42);
 		for (int i = 0; i < model.getGrid().length; i++) {
 			for (int j = 0; j < model.getGrid()[i].length; j++) {
 				if (model.getAt(i, j).getTerrain().equals(TerrainObject.WATER)) {
