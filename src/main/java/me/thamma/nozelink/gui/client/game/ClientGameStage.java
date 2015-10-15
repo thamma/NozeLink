@@ -1,7 +1,5 @@
 package me.thamma.nozelink.gui.client.game;
 
-import java.io.IOException;
-
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.WindowEvent;
@@ -18,14 +16,9 @@ public class ClientGameStage extends Scene {
 		});
 		mainGui.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			public void handle(WindowEvent we) {
-				try {
-					if (mainGui.client != null)
-						mainGui.client.kill();
-					System.exit(0);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				if (mainGui.client != null)
+					mainGui.client.kill();
+				System.exit(0);
 			}
 		});
 	}

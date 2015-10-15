@@ -9,6 +9,7 @@ import me.thamma.nozelink.model.Coordinate;
 import me.thamma.nozelink.model.NozeModel;
 import me.thamma.nozelink.model.TerrainObject;
 import me.thamma.nozelink.model.entity.EntityPlayer;
+import me.thamma.nozelink.model.entity.TerrainEntity;
 
 public class NozeModelTest {
 
@@ -24,6 +25,15 @@ public class NozeModelTest {
 		String res = model.toJSON().toJSONString();
 		NozeModel clone = new NozeModel(res);
 		assertTrue("The JSON-recreated model does not match the original one.", clone.equals(model));
+	}
+
+	@Test
+	public void loadMultiplePlayers() throws ParseException {
+		NozeModel model = new NozeModel();
+		model.setEntityAt(new Coordinate(0,3), new EntityPlayer(0));
+		model.setEntityAt(new Coordinate(0,4), new EntityPlayer(1));
+		NozeModel clone = new NozeModel(model.toJSON().toJSONString());
+		assertTrue("Multiple players could not be properly stored on a model", clone.equals(model));
 	}
 
 	@Test

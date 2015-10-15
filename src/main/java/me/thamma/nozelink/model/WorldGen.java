@@ -29,7 +29,7 @@ public class WorldGen {
 	}
 
 	private void popluate() {
-		spawnLake();
+		spawnLake();spawnLake();
 		// for (int i = 0; i < this.grid.length; i++) {
 		// for (int j = 0; j < this.grid[i].length; j++) {
 		// if (grid[i][j] != null &&

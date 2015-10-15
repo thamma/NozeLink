@@ -24,7 +24,7 @@ public class NozeGui extends Application {
 		this.stage = stage;
 		this.model = new NozeModel();
 		stage.setScene(new ClientLoginStage(this));
-		stage.setScene(new ServerViewStage(this, 80, 1));
+//		stage.setScene(new ServerViewStage(this, 80, 1));
 		stage.getIcons().add(new Image("/res/icon.png"));
 		stage.show();
 	}

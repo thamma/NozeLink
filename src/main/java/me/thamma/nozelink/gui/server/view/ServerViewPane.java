@@ -47,14 +47,20 @@ public class ServerViewPane extends GridPane {
 
 		Button shutdownButton = new Button("Shutdown");
 		shutdownButton.setOnAction((event) -> {
-			try {
-				if (main.server != null)
-					main.server.kill();
+
+			Platform.runLater(() -> {
 				main.stage.setScene(new ServerLoginStage(main));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				if (main.server != null) {
+					try {
+						main.server.kill();
+						main.server = null;
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			});
 		});
 		this.add(shutdownButton, 1, 0, 1, 2);
 
@@ -67,26 +73,16 @@ public class ServerViewPane extends GridPane {
 		log.setPrefHeight(200);
 		this.add(log, 0, 2, 2, 1);
 
-		// Label playerLabel = new Label("max Players:");
-		// this.add(playerLabel, 0, 1);
-
 		this.playerField = new TextField("2");
-		// this.playerField.setPrefWidth(10);
 		this.playerField.setOnKeyPressed((event) -> {
-			// handler.handle(event);
 			if (event.getCode().equals(KeyCode.ENTER))
 				buttonClick();
 		});
-		// this.add(playerField, 1, 1);
 		setMaxLength(playerField, 3);
-
-		// Label portLabel = new Label("at Port:");
-		// this.add(portLabel, 2, 1);
 
 		portField = new TextField("80");
 		portField.setPrefWidth(50);
 		setMaxLength(portField, 5);
-		// this.add(portField, 3, 1);
 
 		System.out.println(main == null);
 		System.out.println(main.stage == null);
@@ -106,7 +102,6 @@ public class ServerViewPane extends GridPane {
 		connect.setOnAction((event) -> {
 			buttonClick();
 		});
-		// this.add(connect, 1, 2, 4, 1);
 	}
 
 	EventHandler<KeyEvent> handler = new EventHandler<KeyEvent>() {
@@ -114,7 +109,6 @@ public class ServerViewPane extends GridPane {
 				KeyCombination.SHIFT_DOWN);
 
 		public void handle(KeyEvent t) {
-			System.out.println("switchting scene");
 			if (main.server != null)
 				return;
 
@@ -153,7 +147,7 @@ public class ServerViewPane extends GridPane {
 			public void run() {
 				Platform.runLater(() -> connect(port, count));
 			}
-
+ 
 		};
 		Timer t = new Timer();
 		t.schedule(run, 40);

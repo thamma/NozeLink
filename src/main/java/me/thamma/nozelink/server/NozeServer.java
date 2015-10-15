@@ -15,10 +15,11 @@ import me.thamma.nozelink.model.entity.EntityPlayer;
 import me.thamma.nozelink.server.event.Event;
 import me.thamma.nozelink.server.event.UpdateModelEvent;
 import me.thamma.serverutils.Server;
-import me.thamma.serverutils.ServerClientInputHandler;
 import me.thamma.serverutils.ServerConnection;
-import me.thamma.serverutils.ServerInputHandler;
-import me.thamma.serverutils.ServerNewConnectionHandler;
+import me.thamma.serverutils.handleres.ServerClientDisconnectHandler;
+import me.thamma.serverutils.handleres.ServerClientInputHandler;
+import me.thamma.serverutils.handleres.ServerInputHandler;
+import me.thamma.serverutils.handleres.ServerNewConnectionHandler;
 
 public class NozeServer extends Server {
 
@@ -26,11 +27,11 @@ public class NozeServer extends Server {
 	public int port, size;
 
 	public NozeServer(int port, int size) throws IOException {
-		super(port, size);
+		super(port);
 		this.port = port;
 		this.size = size;
 		if (model == null)
-			this.model = new NozeModel();
+			this.model = new NozeModel(42);
 	}
 
 	public void sendEvent(Event event, int id) {
@@ -69,6 +70,8 @@ public class NozeServer extends Server {
 
 			@Override
 			public void handle(Server server, String input) {
+				// TODO Auto-generated method stub
+
 			}
 
 		};
@@ -102,6 +105,17 @@ public class NozeServer extends Server {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+		};
+	}
+
+	@Override
+	public ServerClientDisconnectHandler getServerClientDisconnectInputHandler() {
+		return new ServerClientDisconnectHandler() {
+
+			@Override
+			public void handle(Server arg0, ServerConnection arg1) {
+				System.out.println(arg1.getId() + " disconnected");
 			}
 		};
 	}

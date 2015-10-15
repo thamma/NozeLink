@@ -1,5 +1,8 @@
 package me.thamma.nozelink.gui.client.game;
 
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -13,6 +16,14 @@ public class TilePane extends Pane {
 		this.resize(SIZE, SIZE);
 		Image img = new Image(res);
 		ImageView imgView = new ImageView(img);
+		ColorAdjust brightLight = new ColorAdjust(0, 0, .25, 0.25);
+		Light.Distant light = new Light.Distant();
+		light.setAzimuth(-135.0);
+		Lighting lighting = new Lighting();
+		lighting.setLight(light);
+		lighting.setSurfaceScale(4.0);
+		brightLight.setInput(lighting);
+		imgView.setEffect(brightLight);
 		this.getChildren().add(imgView);
 	}
 }

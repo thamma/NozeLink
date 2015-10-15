@@ -10,21 +10,21 @@ import javafx.application.Platform;
 import me.thamma.nozelink.gui.NozeGui;
 import me.thamma.nozelink.model.NozeModel;
 import me.thamma.serverutils.Client;
-import me.thamma.serverutils.ClientInputHandler;
-import me.thamma.serverutils.ClientServerInputHandler;
+import me.thamma.serverutils.ServerConnection;
+import me.thamma.serverutils.handleres.ClientInputHandler;
+import me.thamma.serverutils.handleres.ClientServerInputHandler;
 
 public class NozeClient extends Client {
 
 	private NozeGui main;
 
 	public NozeClient(NozeGui gui, String ip, int port) throws UnknownHostException, IOException {
-		super(ip, port);
+		super(ip, port, false);
 		this.main = gui;
 	}
 
 	public void sendCommand(Command command) {
-//		if (command.validate(main.model))
-			this.pushMessage(command.toJSON().toJSONString());
+		this.sendMessage(command.toJSON().toJSONString());
 	}
 
 	@Override
@@ -32,7 +32,8 @@ public class NozeClient extends Client {
 		return new ClientInputHandler() {
 
 			@Override
-			public void handle(Client client, String input) {
+			public void handle(ServerConnection arg0, String arg1) {
+				// TODO Auto-generated method stub
 
 			}
 		};
@@ -43,7 +44,7 @@ public class NozeClient extends Client {
 		return new ClientServerInputHandler() {
 
 			@Override
-			public void handle(Client client, String input) {
+			public void handle(ServerConnection arg0, String input) {
 				Platform.runLater(() -> {
 					JSONParser parser = new JSONParser();
 					try {
