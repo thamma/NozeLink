@@ -17,7 +17,7 @@ public class NozeModel extends JSONable {
 	private NozeTile[][] grid;
 	private OrderRandom random;
 
-	public static final int SIZE = 10;
+	public static final int SIZE = 12;
 
 	public NozeModel() {
 		this.grid = new NozeTile[SIZE][SIZE];

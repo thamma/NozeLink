@@ -22,6 +22,7 @@ public class NozeGui extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
+//		this.stage.setFullScreen(true);
 		this.model = new NozeModel();
 		stage.setScene(new ClientLoginStage(this));
 //		stage.setScene(new ServerViewStage(this, 80, 1));

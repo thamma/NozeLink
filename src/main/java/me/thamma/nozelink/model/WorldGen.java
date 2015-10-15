@@ -29,7 +29,8 @@ public class WorldGen {
 	}
 
 	private void popluate() {
-		spawnLake();spawnLake();
+		spawnLake();
+		spawnRidge();
 		// for (int i = 0; i < this.grid.length; i++) {
 		// for (int j = 0; j < this.grid[i].length; j++) {
 		// if (grid[i][j] != null &&
@@ -40,11 +41,31 @@ public class WorldGen {
 		// }
 	}
 
-	private final int LAKESIZE = 20;
+	private final int RIDGESIZE = NozeModel.SIZE;
+	private final int LAKESIZE = NozeModel.SIZE*2;
+
+	private void spawnRidge() {
+		int x = random.getNth(seed * (size + RIDGESIZE * 3));
+		int y = random.getNth((seed + LAKESIZE * 13) * size + 1);
+		Coordinate ridgeAt = new Coordinate(x, y);
+		Set<Coordinate> ridge = new HashSet<Coordinate>();
+		ridge.add(ridgeAt);
+		for (int i = 0; i < RIDGESIZE; i++) {
+			ridgeAt = ridgeAt.clone();
+			ridgeAt.moveById(random.nextInt(4));
+			System.out.println(ridgeAt);
+			ridge.add(ridgeAt.clone());
+		}
+		for (Coordinate coord : ridge) {
+			// grid[coord.x][coord.y] = new NozeTile(TerrainObject.WATER);
+			if (grid[coord.x][coord.y].getTerrain().equals(TerrainObject.GRASS))
+				grid[coord.x][coord.y].setTerrain(TerrainObject.ROCK);
+		}
+	}
 
 	private void spawnLake() {
 		int x = random.getNth(seed * (size + LAKESIZE));
-		int y = random.getNth((seed +LAKESIZE)* size + 1);
+		int y = random.getNth((seed + LAKESIZE) * size + 1);
 		Coordinate lakeAt = new Coordinate(x, y);
 		Set<Coordinate> lake = new HashSet<Coordinate>();
 		lake.add(lakeAt);
@@ -56,7 +77,8 @@ public class WorldGen {
 		}
 		for (Coordinate coord : lake) {
 			// grid[coord.x][coord.y] = new NozeTile(TerrainObject.WATER);
-			grid[coord.x][coord.y].setTerrain(TerrainObject.WATER);
+			if (grid[coord.x][coord.y].getTerrain().equals(TerrainObject.GRASS))
+				grid[coord.x][coord.y].setTerrain(TerrainObject.WATER);
 		}
 	}
 

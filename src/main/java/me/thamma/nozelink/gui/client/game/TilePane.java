@@ -16,6 +16,7 @@ public class TilePane extends Pane {
 		this.resize(SIZE, SIZE);
 		Image img = new Image(res);
 		ImageView imgView = new ImageView(img);
+
 		ColorAdjust brightLight = new ColorAdjust(0, 0, .25, 0.25);
 		Light.Distant light = new Light.Distant();
 		light.setAzimuth(-135.0);
@@ -24,6 +25,8 @@ public class TilePane extends Pane {
 		lighting.setSurfaceScale(4.0);
 		brightLight.setInput(lighting);
 		imgView.setEffect(brightLight);
+		imgView.fitWidthProperty().bind(this.widthProperty());
+		imgView.fitHeightProperty().bind(this.heightProperty());
 		this.getChildren().add(imgView);
 	}
 }
