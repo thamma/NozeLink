@@ -15,7 +15,7 @@ public class NozeModel extends JSONable {
 
 	private NozeTile[][] grid;
 
-	public static final int SIZE = 12;
+	public static final int SIZE = 18;
 
 	public NozeModel() {
 		this.grid = new NozeTile[SIZE][SIZE];
@@ -32,18 +32,33 @@ public class NozeModel extends JSONable {
 		return this.grid;
 	}
 
-	public void movePlayer(int id, int direction) {
-		Coordinate from = null;
-		outermost: for (int i = 0; i < this.grid.length; i++)
+	public Coordinate getPlayerCoordinate(int id) {
+		for (int i = 0; i < this.grid.length; i++)
 			for (int j = 0; j < this.grid[i].length; j++)
-				if (this.grid[i][j].getEntity() instanceof EntityPlayer)
-					if (((EntityPlayer) this.grid[i][j].getEntity()).getId() == id) {
-						from = new Coordinate(i, j);
-						break outermost;
-					}
-		if (from == null) {
+				if (this.getAt(i, j).getEntity() instanceof EntityPlayer)
+					if (((EntityPlayer) this.getAt(i, j).getEntity()).getId() == id)
+						return new Coordinate(i, j);
+		return null;
+	}
+
+	public void joinPlayer(int id) {
+		if (getPlayerCoordinate(id) != null)
 			return;
-		}
+		Coordinate coord = randomFreeCoordinate();
+		setEntityAt(coord, new EntityPlayer(id));
+	}
+
+	public void quitPlayer(int id) {
+		if (getPlayerCoordinate(id) == null)
+			return;
+		Coordinate coord = getPlayerCoordinate(id);
+		setEntityAt(coord, new EntityNone());
+	}
+
+	public void movePlayer(int id, int direction) {
+		Coordinate from = getPlayerCoordinate(id);
+		if (from == null)
+			return;
 		EntityPlayer player = (EntityPlayer) this.getAt(from).getEntity();
 		Coordinate to = new Coordinate(from.x, from.y);
 		to.moveById(direction);
@@ -82,6 +97,25 @@ public class NozeModel extends JSONable {
 		return grid[x % SIZE][y % SIZE];
 	}
 
+	public void applyDifferences(JSONObject updates) {
+		for (Object o : updates.keySet()) {
+			if (o instanceof String) {
+				String s = (String) o;
+				if (s.contains(",")) {
+					String[] args = s.split(",");
+					int i = Integer.parseInt(args[0]);
+					int j = Integer.parseInt(args[1]);
+					try {
+						this.grid[i][j] = new NozeTile((String) updates.get(s));
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
+
 	public boolean equals(Object object) {
 		if (!(object instanceof NozeModel))
 			return false;
@@ -104,6 +138,16 @@ public class NozeModel extends JSONable {
 			for (int j = 0; j < this.grid[i].length; j++)
 				object.put("" + i + "," + j, (String) this.getAt(i, j).toJSON().toJSONString());
 		return object;
+	}
+
+	public NozeModel clone() {
+		NozeModel out = new NozeModel();
+		for (int i = 0; i < this.grid.length; i++) {
+			for (int j = 0; j < this.grid[i].length; j++) {
+				out.grid[i][j] = this.getAt(new Coordinate(i, j)).clone();
+			}
+		}
+		return out;
 	}
 
 }

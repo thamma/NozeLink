@@ -2,6 +2,7 @@ package ModelTests;
 
 import static org.junit.Assert.assertTrue;
 
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
@@ -29,8 +30,8 @@ public class NozeModelTest {
 	@Test
 	public void loadMultiplePlayers() throws ParseException {
 		NozeModel model = new NozeModel();
-		model.setEntityAt(new Coordinate(0,3), new EntityPlayer(0));
-		model.setEntityAt(new Coordinate(0,4), new EntityPlayer(1));
+		model.setEntityAt(new Coordinate(0, 3), new EntityPlayer(0));
+		model.setEntityAt(new Coordinate(0, 4), new EntityPlayer(1));
 		NozeModel clone = new NozeModel(model.toJSON().toJSONString());
 		assertTrue("Multiple players could not be properly stored on a model", clone.equals(model));
 	}
@@ -68,6 +69,21 @@ public class NozeModelTest {
 	public void initBoardNonNull() {
 		NozeModel model = new NozeModel();
 		model.getAt(0, 0);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject differences(NozeModel oldModel, NozeModel model) {
+		model.setEntityAt(new Coordinate(3, 3), new EntityPlayer(0));
+		JSONObject out = new JSONObject();
+		for (int i = 0; i < oldModel.getGrid().length; i++) {
+			for (int j = 0; j < oldModel.getGrid()[i].length; j++) {
+				if (!oldModel.getAt(i, j).equals(model.getAt(i, j))) {
+					out.put("" + i + "," + j, model.getAt(i, j).toJSON().toJSONString());
+				}
+			}
+		}
+		oldModel = model;
+		return out;
 	}
 
 }

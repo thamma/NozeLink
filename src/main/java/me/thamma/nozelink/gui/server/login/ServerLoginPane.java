@@ -94,7 +94,6 @@ public class ServerLoginPane extends GridPane {
 		if (connect.isDisabled())
 			return;
 		final int port;
-		final int count;
 		try {
 			port = Integer.valueOf(portField.getText());
 		} catch (NumberFormatException e) {
@@ -123,7 +122,6 @@ public class ServerLoginPane extends GridPane {
 					connect.setText("Launched");
 				});
 				main.server = new NozeServer(port);
-				System.out.println("server==null == " + (main.server == null));
 				main.stage.setScene(new ServerViewStage(main));
 			} catch (Exception e) {
 				connect.setText("Error launching");

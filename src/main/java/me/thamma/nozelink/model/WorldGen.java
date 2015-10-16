@@ -29,34 +29,35 @@ public class WorldGen {
 	}
 
 	private void popluate() {
-		spawnLake();
+		// spawnLake();
 		spawnRidge();
 	}
 
-	private final int RIDGESIZE = NozeModel.SIZE;
-	private final int LAKESIZE = NozeModel.SIZE * 2;
+	private final int RIDGESIZE = (int) (NozeModel.SIZE * NozeModel.SIZE * 0.3);
+	private final int LAKESIZE = NozeModel.SIZE * NozeModel.SIZE;
 
 	private void spawnRidge() {
-		int x = random.getNth(seed * (size + RIDGESIZE * 3));
-		int y = random.getNth((seed + LAKESIZE * 13) * size + 1);
-		Coordinate ridgeAt = new Coordinate(x, y);
+		Coordinate ridgeAt = new Coordinate(random.getNth(seed * 103), random.getNth(seed * 103 + 1));
+		int direction = random.getNth("direction".hashCode()) % 4;
+		int[] res = { direction, 0, 1, 2, 3 };
 		Set<Coordinate> ridge = new HashSet<Coordinate>();
 		ridge.add(ridgeAt);
-		for (int i = 0; i < RIDGESIZE; i++) {
+		int i = 0;
+		while (ridge.size() < RIDGESIZE) {
 			ridgeAt = ridgeAt.clone();
-			ridgeAt.moveById(random.nextInt(4));
+			ridgeAt.moveById(res[random.getNth(ridgeAt.hashCode() + i) % res.length]);
 			ridge.add(ridgeAt.clone());
+			i++;
 		}
 		for (Coordinate coord : ridge) {
-			// grid[coord.x][coord.y] = new NozeTile(TerrainObject.WATER);
 			if (grid[coord.x][coord.y].getTerrain().equals(TerrainObject.GRASS))
 				grid[coord.x][coord.y].setTerrain(TerrainObject.ROCK);
 		}
 	}
 
 	private void spawnLake() {
-		int x = random.getNth(seed * (size + LAKESIZE));
-		int y = random.getNth((seed + LAKESIZE) * size + 1);
+		int x = random.getNth(seed * 37);
+		int y = random.getNth(seed * 37 + 1);
 		Coordinate lakeAt = new Coordinate(x, y);
 		Set<Coordinate> lake = new HashSet<Coordinate>();
 		lake.add(lakeAt);
@@ -73,7 +74,7 @@ public class WorldGen {
 
 	@SuppressWarnings("unused")
 	private void terraform() {
-		//TODO
+		// TODO
 	}
 
 	public NozeTile[][] getGrid() {

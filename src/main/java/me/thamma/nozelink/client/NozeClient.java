@@ -34,7 +34,8 @@ public class NozeClient extends Client {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("");
 			alert.setHeaderText("Connection Lost!");
-			alert.setContentText("Looks like the connection to the server's been lost.\nPlease re-check your connection!");
+			alert.setContentText(
+					"Looks like the connection to the server's been lost.\nPlease re-check your connection!");
 			alert.showAndWait();
 			main.client = null;
 			main.stage.setScene(new ClientLoginStage(main));
@@ -65,8 +66,11 @@ public class NozeClient extends Client {
 						Object o = parser.parse(input);
 						JSONObject object = (JSONObject) o;
 
-						if (((String) object.get("type")).equals("UpdateModelEvent")) {
+						if (((String) object.get("type")).equals("SendModelEvent")) {
 							main.model = new NozeModel(input);
+							main.clientView.redraw();
+						} else if (((String) object.get("type")).equals("UpdateModelEvent")) {
+							main.model.applyDifferences(object);
 							main.clientView.redraw();
 						}
 					} catch (Exception e) {

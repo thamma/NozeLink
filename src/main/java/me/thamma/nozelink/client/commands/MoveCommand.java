@@ -8,6 +8,7 @@ import me.thamma.nozelink.model.NozeModel;
 import me.thamma.nozelink.model.OccupyType;
 import me.thamma.nozelink.model.entity.EntityPlayer;
 import me.thamma.nozelink.server.NozeServer;
+import me.thamma.nozelink.server.event.SendModelEvent;
 import me.thamma.nozelink.server.event.UpdateModelEvent;
 
 public class MoveCommand extends Command {
@@ -38,19 +39,13 @@ public class MoveCommand extends Command {
 	@Override
 	public void execute(NozeServer server, NozeModel model) {
 		model.movePlayer(this.playerId, this.direction);
-		server.sendEvent(new UpdateModelEvent(model));
+		server.sendEvent(new UpdateModelEvent(server));
+		server.logger.info("Handling command:\n    " + this.toJSON().toJSONString());
 	}
 
 	@Override
 	public boolean validate(NozeModel model) {
-		Coordinate from = null;
-		outermost: for (int i = 0; i < model.getGrid().length; i++)
-			for (int j = 0; j < model.getGrid()[i].length; j++)
-				if (model.getGrid()[i][j].getEntity() instanceof EntityPlayer)
-					if (((EntityPlayer) model.getGrid()[i][j].getEntity()).getId() == this.playerId) {
-						from = new Coordinate(i, j);
-						break outermost;
-					}
+		Coordinate from = model.getPlayerCoordinate(this.playerId);
 		if (from == null) {
 			return false;
 		}

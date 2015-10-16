@@ -2,7 +2,7 @@ package me.thamma.nozelink.model.entity;
 
 import org.json.simple.JSONObject;
 
-public class EntityNone extends TerrainEntity {
+public class EntityNone extends TerrainEntity  {
 
 	public EntityNone() {
 		super();
@@ -16,4 +16,15 @@ public class EntityNone extends TerrainEntity {
 		return out;
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof EntityNone))
+			return false;
+		return true;
+	}
+
+	@Override
+	public TerrainEntity clone() {
+		return new EntityNone();
+	}
 }

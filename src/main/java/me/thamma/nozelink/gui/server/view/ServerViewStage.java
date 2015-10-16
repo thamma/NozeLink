@@ -6,7 +6,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.WindowEvent;
 import me.thamma.nozelink.gui.NozeGui;
-import me.thamma.nozelink.server.NozeServer;
 
 public class ServerViewStage extends Scene {
 
@@ -28,5 +27,4 @@ public class ServerViewStage extends Scene {
 			}
 		});
 	}
-
 }

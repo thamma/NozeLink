@@ -24,4 +24,19 @@ public class EntityPlayer extends TerrainEntity {
 		return out;
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof EntityPlayer))
+			return false;
+		EntityPlayer player = (EntityPlayer) object;
+		if (player.getId() != this.getId())
+			return false;
+		return true;
+	}
+
+	@Override
+	public TerrainEntity clone() {
+		return new EntityPlayer(this.id);
+	}
+
 }

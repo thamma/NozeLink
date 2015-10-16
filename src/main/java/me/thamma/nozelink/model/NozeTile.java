@@ -67,6 +67,18 @@ public class NozeTile extends JSONable {
 		this.entity = entity;
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (!(object instanceof NozeTile))
+			return false;
+		NozeTile tile = (NozeTile) object;
+		if (!tile.getEntity().equals(this.getEntity()))
+			return false;
+		if (!tile.getTerrain().equals(this.getTerrain()))
+			return false;
+		return true;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public JSONObject toJSON() {
@@ -76,4 +88,10 @@ public class NozeTile extends JSONable {
 		return object;
 	}
 
+	public NozeTile clone() {
+		NozeTile out = new NozeTile();
+		out.setTerrain(this.getTerrain());
+		out.setEntity(this.getEntity().clone());
+		return out;
+	}
 }

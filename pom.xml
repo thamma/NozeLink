@@ -4,7 +4,7 @@
 	<groupId>me.thamma.nozelink</groupId>
 	<artifactId>nozelink</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.27-SNAPSHOT</version>
+	<version>1.0.28-SNAPSHOT</version>
 	<name>nozelink</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -44,11 +44,11 @@
 			<artifactId>json</artifactId>
 			<version>20150729</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.github.thamma</groupId> -->
-<!-- 			<artifactId>ServerUtils</artifactId> -->
-<!-- 			<version>v1.3</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>com.github.thamma</groupId>
+			<artifactId>ServerUtils</artifactId>
+			<version>v1.4</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
